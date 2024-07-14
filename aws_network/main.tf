@@ -10,8 +10,6 @@
 # Made by Denis Astahov. Summer 2019
 #----------------------------------------------------------
 
-#==============================================================
-
 data "aws_availability_zones" "available" {}
 
 resource "aws_vpc" "main" {
@@ -57,8 +55,8 @@ resource "aws_route_table_association" "public_routes" {
   subnet_id      = element(aws_subnet.public_subnets[*].id, count.index)
 }
 
-#-----NAT Gateways with Elastic IPs--------------------------
 /*
+#-----NAT Gateways with Elastic IPs--------------------------
 resource "aws_eip" "nat" {
   count   = length(var.private_subnet_cidrs)
   domain = "vpc"
@@ -105,5 +103,3 @@ resource "aws_route_table_association" "private_routes" {
   route_table_id = aws_route_table.private_subnets[count.index].id
   subnet_id      = element(aws_subnet.private_subnets[*].id, count.index)
 }
-
-#==============================================================
